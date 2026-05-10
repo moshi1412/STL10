@@ -8,7 +8,7 @@ classes=['airplane', 'bird', 'car', 'cat', 'deer', 'dog', 'horse', 'monkey', 'sh
 class STLDataset():
     def __init__(self, image_path,transform=None):
         self.image_path=image_path
-        self.transform = transform if transform else transforms.Compose( [ transforms.ToTensor()])
+        self.transform = transform 
     def __len__(self):
         return len(self.image_path)
     def __getitem__(self, index):
@@ -19,9 +19,12 @@ class STLDataset():
         # print(label)
         image = Image.open(file_name)
         # print(image.size)#96*96
+        
         if self.transform:
             image = self.transform(image)
-        
+        else :
+            self.transform=transforms.Compose( [ transforms.ToTensor()])
+            image=self.transform(image)
         return image,label
 
 

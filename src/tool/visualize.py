@@ -3,8 +3,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 # 加载数据
-epoch_losses = np.load('../../out/train/deeper/epoch_losses.npy')
-epoch_accuracies = np.load('../../out/train/deeper/epoch_accuracies.npy')
+name='res_aug'
+epoch_losses = np.load(f'../../out/train/{name}/epoch_losses.npy')
+epoch_accuracies = np.load(f'../../out/train/{name}/epoch_accuracies.npy')
 
 # 创建图形
 fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 5))
@@ -26,5 +27,5 @@ ax2.legend()
 ax2.grid(True, linestyle='--', alpha=0.7)
 
 plt.tight_layout()
-plt.savefig('../../out/train/deeper/training_curves.png', dpi=300, bbox_inches='tight')
+plt.savefig(f'../../out/train/{name}/training_curves.png', dpi=300, bbox_inches='tight')
 plt.show()

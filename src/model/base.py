@@ -8,23 +8,28 @@ class CNNModel(nn.Module):
         super().__init__()
         self.conv1 = nn.Conv2d(3, 32, kernel_size=3, padding=1)
         self.bn1 = nn.BatchNorm2d(32)
-        self.pool1 = nn.MaxPool2d(2)
+        self.pool1 = nn.AvgPool2d(2)
         self.dropout1 = nn.Dropout(0.2)
-
+        # self.gelu1 = nn.GELU()
 
         self.conv2 = nn.Conv2d(32, 64, kernel_size=3, padding=1)
         self.bn2 = nn.BatchNorm2d(64)
-        self.pool2 = nn.MaxPool2d(2)
+        self.pool2 = nn.AvgPool2d(2)
         self.dropout2 = nn.Dropout(0.2)
+        # self.gelu2 = nn.GELU()
 
         self.conv3 = nn.Conv2d(64, 128, kernel_size=3, padding=1)
         self.bn3 = nn.BatchNorm2d(128)
-        self.pool3 = nn.MaxPool2d(2)
+        self.pool3 = nn.AvgPool2d(2)
         self.dropout3 = nn.Dropout(0.2)
+        # self.gelu3 = nn.GELU()
+        
         self.conv4 = nn.Conv2d(128, 256, kernel_size=3, padding=1)
         self.bn4 = nn.BatchNorm2d(256)
-        self.pool4 = nn.MaxPool2d(2)
+        self.pool4 = nn.AvgPool2d(2)
         self.dropout4 = nn.Dropout(0.2)
+        # self.gelu4 = nn.GELU()
+
 
         self.gap = nn.AdaptiveAvgPool2d(1)
         self.dropout5 = nn.Dropout(0.2)
