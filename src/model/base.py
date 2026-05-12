@@ -36,7 +36,7 @@ class CNNModel(nn.Module):
         self.classifier = nn.Sequential(
             nn.Flatten(),
             nn.Linear(256, 128),
-            nn.ReLU(),
+            nn.Tanh(),
             nn.Linear(128, 10),
             nn.Dropout(0.2)
         )

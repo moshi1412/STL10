@@ -95,7 +95,7 @@ def load_model(model_type, weight_path):
     else:
         raise ValueError(f"Unknown model_type: {model_type}")
 
-    model.load_state_dict(torch.load(weight_path, map_location='cpu'), strict=True)
+    model.load_state_dict(torch.load(weight_path, map_location='cpu')['model'], strict=True)
     model.eval()
     return model
 
@@ -217,10 +217,10 @@ def visualize_single(model_type, weight_path, image_path, output_dir):
 
 
 if __name__ == '__main__':
-    MODEL_TYPE = 'res'
-    WEIGHT_PATH = '../../out/train/transform/best_model.pth'
+    MODEL_TYPE = 'base'
+    WEIGHT_PATH = '../../out/train/avg/checkpoint.pth'
     IMAGE_DIR = '../../STL10/test'
-    OUTPUT_DIR = '../../out/gradcam'
+    OUTPUT_DIR = '../../out/gradcam/avg'
 
     visualize_gradcam(
         model_type=MODEL_TYPE,

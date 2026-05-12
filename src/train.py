@@ -6,7 +6,8 @@ from torch.utils.data import DataLoader
 import torchvision.transforms as transforms
 import logging
 import numpy as np
-log_dir = '../out/train/avg'
+import timm
+log_dir = '../out/train/res_16_0.005'
 os.makedirs(log_dir, exist_ok=True)
 logging.basicConfig(
     level=logging.INFO,
@@ -29,7 +30,7 @@ TRANSFORM=transforms.Compose(
         # transforms.Normalize(mean=[0.5, 0.5, 0.5], std=[0.5, 0.5, 0.5]),
     ]
 )
-BATCH_SIZE=8
+BATCH_SIZE=16
 EPOCHS=200
 # LR=0.001
 RESUME=True
@@ -43,20 +44,20 @@ from model.base import CNNModel
 # model=CNN_SE().to('cuda')
 # model=CNN_CBAM().to('cuda')
 # 
-# from model.res import CNNResModel
+from model.res import CNNResModel
 
-# model=CNNResModel().to('cuda')
+model=CNNResModel().to('cuda')
 
 # if RESUME:
-#     model.load_state_dict(torch.load(os.path.join(log_dir, 'best_model.pth')),strict=False)
+#     model.load_state_dict(torch.load(os.path.join(log_dir, 'checkpoint.pth'))['model'],strict=False)
 # from model.deeper import CNNModel
 
-model=CNNModel().to('cuda')
+# model=CNNModel().to('cuda')
 
 
 
 criterion=torch.nn.CrossEntropyLoss()
-LR = 0.001
+LR = 0.0005
 optimizer = torch.optim.AdamW(model.parameters(), lr=LR, weight_decay=1e-4)
 scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(
     optimizer,
@@ -98,11 +99,11 @@ for epoch in range(EPOCHS):
         scheduler.step()
         if step % 100 == 0:
             avg_loss = sum(loss_list) / len(loss_list)
-            logging.info(f'Epoch {epoch}, Step:{step}, Avg Loss: {avg_loss}')
+            logging.info(f'Epoch {epoch}, Step:{step}, Avg Loss: {avg_loss} lr:{optimizer.param_groups[0]["lr"]:.4f}')
             loss_list = [] 
             
         step += 1
-    
+        del image, label, output, loss
     avg_loss = sum(loss_list) / len(loss_list) if loss_list else 0
     epoch_losses.append(avg_loss)
 
