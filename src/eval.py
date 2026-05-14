@@ -7,7 +7,7 @@ from torch.utils.data import DataLoader
 import torchvision.transforms as transforms
 import logging
 import numpy as np
-Nm='res_16_0.005'
+Nm='res_32_0.001'
 log_dir = f'../out/test/{Nm}'
 os.makedirs(log_dir, exist_ok=True)
 logging.basicConfig(
