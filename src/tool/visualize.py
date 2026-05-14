@@ -3,7 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 # 加载数据
-name='res_8_0.0005'
+name='res_0.0005_'
 epoch_losses = np.load(f'../../out/train/{name}/epoch_losses.npy')
 epoch_accuracies = np.load(f'../../out/train/{name}/epoch_accuracies.npy')
 

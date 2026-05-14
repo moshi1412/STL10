@@ -7,7 +7,7 @@ import torchvision.transforms as transforms
 import logging
 import numpy as np
 import timm
-log_dir = '../out/train/res_32_0.001'
+log_dir = '../out/train/res_0.0005_30000'
 os.makedirs(log_dir, exist_ok=True)
 logging.basicConfig(
     level=logging.INFO,
@@ -30,8 +30,8 @@ TRANSFORM=transforms.Compose(
         # transforms.Normalize(mean=[0.5, 0.5, 0.5], std=[0.5, 0.5, 0.5]),
     ]
 )
-BATCH_SIZE=32
-EPOCHS=200
+BATCH_SIZE=16
+EPOCHS=100
 # LR=0.001
 RESUME=True
 train_set, val_set = get_datasets(train_root, transform=TRANSFORM,split=0.8)
@@ -57,11 +57,11 @@ model=CNNResModel().to('cuda')
 
 
 criterion=torch.nn.CrossEntropyLoss()
-LR = 0.001
+LR = 0.0005
 optimizer = torch.optim.AdamW(model.parameters(), lr=LR, weight_decay=1e-4)
 scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(
     optimizer,
-    T_max=5000,
+    T_max=30000,
     eta_min=1e-5
 )
 epoch_losses = []
